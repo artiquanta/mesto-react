@@ -1,9 +1,0 @@
-.page__section {
-  margin-top: 45px;
-}
-
-@media screen and (max-width: 611px) {
-  .page__section {
-    margin-top: 8.75vw;
-  }
-}

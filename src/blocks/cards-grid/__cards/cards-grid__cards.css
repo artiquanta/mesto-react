@@ -1,9 +1,0 @@
-.cards-grid__cards {
-  margin: 50px 0 0;
-}
-
-@media screen and (max-width: 611px) {
-  .cards-grid__cards {
-    margin-top: 36px;
-  }
-}
