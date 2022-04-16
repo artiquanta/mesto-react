@@ -32,4 +32,4 @@
 
 ## Ссылка на проектную работу
 
-Проектная работа доступна на странице [GitHub Pages](https://artiquanta.github.io/mesto/)
+Проектная работа доступна на странице [GitHub Pages](https://artiquanta.github.io/mesto-react/)
