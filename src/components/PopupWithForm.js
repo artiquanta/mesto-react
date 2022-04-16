@@ -1,8 +1,6 @@
-import React from "react";
-
 function PopupWithForm(props) {
   return (
-    <div className={`popup popup_type_${props.name} ${props.isOpen ? 'popup_opened' : ''}`}>
+    <div className={`popup ${props.isOpen ? 'popup_opened' : ''}`}>
       <div className="popup__overlay" onClick={props.onClose}></div>
       <div className="popup__container popup__container_content_form">
         <button className="popup__close-btn" onClick={props.onClose} />

@@ -1,12 +1,8 @@
-import React from "react";
-
-function Card(props) {
-  const card = props.card; // текущая карточка
-  const currentUser = props.currentUser; // идентификатор текущего пользователя
+function Card({ card, currentUser, onCardClick }) {
 
   // Функция-колбэк открытия модального окна просмотра изображения карточки
   function handleImageClick() {
-    props.onCardClick(props.card);
+    onCardClick(card);
   }
 
   return (

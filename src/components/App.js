@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -7,12 +7,12 @@ import ImagePopup from './ImagePopup';
 import { formAvatar, formProfile, formAddCard } from '../utils/utils';
 
 function App() {
-  const [isEditProfilePopupOpen, openPopupProfile] = React.useState(false);
-  const [isAddPlacePopupOpen, openPopupAddCards] = React.useState(false);
-  const [isEditAvatarPopupOpen, openPopupAvatar] = React.useState(false);
-  const [formContent, setFormContent] = React.useState('');
-  const [popupFormName, setPopupFormName] = React.useState('');
-  const [selectedCard, selectCard] = React.useState('');
+  const [isEditProfilePopupOpen, openPopupProfile] = useState(false);
+  const [isAddPlacePopupOpen, openPopupAddCards] = useState(false);
+  const [isEditAvatarPopupOpen, openPopupAvatar] = useState(false);
+  const [formContent, setFormContent] = useState('');
+  const [popupFormName, setPopupFormName] = useState('');
+  const [selectedCard, selectCard] = useState({});
 
   // Открытие модального окна изменения аватара
   function handleEditAvatarClick() {
@@ -41,7 +41,7 @@ function App() {
     openPopupAvatar(false);
     openPopupProfile(false);
     setFormContent('');
-    selectCard('');
+    selectCard({});
     setPopupFormName('');
   }
 

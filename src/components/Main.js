@@ -1,16 +1,16 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import api from '../utils/Api';
 import Card from './Card';
 
 function Main(props) {
-  const [userId, setUserId] = React.useState('');
-  const [userName, setUserName] = React.useState('');
-  const [userDescription, setUserDescription] = React.useState('');
-  const [userAvatar, setUserAvatar] = React.useState('');
-  const [cards, addCard] = React.useState([]);
+  const [userId, setUserId] = useState('');
+  const [userName, setUserName] = useState('');
+  const [userDescription, setUserDescription] = useState('');
+  const [userAvatar, setUserAvatar] = useState('');
+  const [cards, addCard] = useState([]);
 
   // Получение с сервера информации о текущем пользователе и имеющихся карточках
-  React.useEffect(() => {
+  useEffect(() => {
     Promise.all([
       api.getCurrentUser(),
       api.getInitialCards()
