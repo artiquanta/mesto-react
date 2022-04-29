@@ -1,55 +1,37 @@
-import { useState, useEffect } from "react";
-import api from '../utils/Api';
+import { useContext, memo } from "react";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Card from './Card';
 
 function Main(props) {
-  const [userId, setUserId] = useState('');
-  const [userName, setUserName] = useState('');
-  const [userDescription, setUserDescription] = useState('');
-  const [userAvatar, setUserAvatar] = useState('');
-  const [cards, addCard] = useState([]);
-
-  // Получение с сервера информации о текущем пользователе и имеющихся карточках
-  useEffect(() => {
-    Promise.all([
-      api.getCurrentUser(),
-      api.getInitialCards()
-    ])
-      .then(([userData, existingCards]) => {
-        setUserId(userData._id);
-        setUserName(userData.name);
-        setUserDescription(userData.about);
-        setUserAvatar(userData.avatar);
-        addCard(card => [...card, ...existingCards]);
-      })
-      .catch(err => console.log(`При выполнении запроса произошла ошибка. Код ошибки: ${err.status}`));
-  }, []);
+  const { cards, onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardLike, onCardDelete } = props;
+  const currentUser = useContext(CurrentUserContext);
 
   return (
     <main className="content">
       <section className="profile content__profile">
         <div className="profile__info">
-          <div className="profile__avatar" onClick={props.onEditAvatar}>
+          <div className="profile__avatar" onClick={onEditAvatar}>
             <div className="profile__avatar-overlay"></div>
-            <img src={`${userAvatar}`} alt="Аватар профиля пользователя." className="profile__avatar-img" />
+            <img src={`${currentUser.avatar}`} alt="Аватар профиля пользователя." className="profile__avatar-img" />
           </div>
           <div className="profile__author-info">
             <div className="profile__control">
-              <h1 className="profile__author">{userName}</h1>
-              <button className="profile__edit-btn" onClick={props.onEditProfile} />
+              <h1 className="profile__author">{currentUser.name}</h1>
+              <button className="profile__edit-btn" onClick={onEditProfile} />
             </div>
-            <p className="profile__activity">{userDescription}</p>
+            <p className="profile__activity">{currentUser.about}</p>
           </div>
         </div>
-        <button className="profile__add-btn" onClick={props.onAddPlace} />
+        <button className="profile__add-btn" onClick={onAddPlace} />
       </section>
       <section className="cards-grid">
         <ul className="cards cards-grid__cards">
           {cards.map((card) =>
             <Card
               card={card}
-              currentUser={userId}
-              onCardClick={props.onCardClick}
+              onCardClick={onCardClick}
+              onCardLike={onCardLike}
+              onCardDelete={onCardDelete}
               key={card._id}
             />
           )}
@@ -59,4 +41,4 @@ function Main(props) {
   );
 }
 
-export default Main;
+export default memo(Main);

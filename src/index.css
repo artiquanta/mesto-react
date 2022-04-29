@@ -81,3 +81,9 @@
 @import url(./blocks/popup-error/__title/popup-error__title.css);
 @import url(./blocks/popup-error/__description/popup-error__description.css);
 @import url(./blocks/popup-error/__code/popup-error__code.css);
+
+/* Loader */
+@import url(./blocks/loader/loader.css);
+@import url(./blocks/loader/_opened/loader_opened.css);
+@import url(./blocks/loader/loader__logo/loader__logo.css);
+@import url(./blocks/loader/loader__description/loader__description.css);

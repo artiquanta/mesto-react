@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 function Header() {
   return (
     <header className="header page__section">
@@ -6,4 +8,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default memo(Header);
