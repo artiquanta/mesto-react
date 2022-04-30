@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo } from 'react';
 
 function ImagePopup(props) {
   const { card, onClose } = props;

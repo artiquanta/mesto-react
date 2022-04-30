@@ -1,5 +1,5 @@
-import { memo, useState, useEffect } from "react";
-import PopupWithForm from "./PopupWithForm";
+import { memo, useState, useEffect } from 'react';
+import PopupWithForm from './PopupWithForm';
 
 function AddPlacePopup(props) {
   const { isOpen, onClose, onAddPlace, isProcessing } = props;
@@ -67,9 +67,13 @@ function AddPlacePopup(props) {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      heading='Новое место'
+      isLeftSideHeading
+      extraButtonClass={false}
+      submitButtonStatus={submitButtonStatus}
+      formValid={formValid}
     >
       <>
-        <h2 className="popup__heading popup__heading_type_left-side">Новое место</h2>
         <label className="popup__field">
           <input type="text" placeholder="Название" name="title" className={`popup__input ${(inputValidity.title || primaryValidation.title) ? '' : 'popup__input_state_error'}`}
             id="place-input" minLength="2" maxLength="30" required value={title} onChange={handleChange} />
@@ -80,7 +84,6 @@ function AddPlacePopup(props) {
             id="link-input" required value={link} onChange={handleChange} />
           <span className={`popup__input-error ${(inputValidity.link || primaryValidation.link) ? '' : 'popup__input-error_active'}`}>{inputErrorText.link}</span>
         </label>
-        <button className={`popup__submit-btn popup__submit-btn_place_cards ${formValid ? '' : 'popup__submit-btn_inactive'}`} type="submit" disabled={formValid ? false : true}>{submitButtonStatus}</button>
       </>
     </PopupWithForm>
   );

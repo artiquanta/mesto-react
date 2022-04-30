@@ -1,6 +1,6 @@
-import { memo, useContext, useState, useEffect } from "react";
-import PopupWithForm from "./PopupWithForm";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { memo, useContext, useState, useEffect } from 'react';
+import PopupWithForm from './PopupWithForm';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function EditProfilePopup(props) {
   const { isOpen, onClose, onUpdateUser, isProcessing } = props;
@@ -70,9 +70,13 @@ function EditProfilePopup(props) {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      heading='Редактировать профиль'
+      isLeftSideHeading={false}
+      extraButtonClass={false}
+      submitButtonStatus={submitButtonStatus}
+      formValid={formValid}
     >
       <>
-        <h2 className="popup__heading">Редактировать профиль</h2>
         <label className="popup__field">
           <input type="text" placeholder="Имя" name="name" className={`popup__input ${inputValidity.name ? '' : 'popup__input_state_error'}`}
             id="author-input" minLength="2" maxLength="40" required value={name} onChange={handleChange} />
@@ -83,7 +87,6 @@ function EditProfilePopup(props) {
             id="activity-input" minLength="2" maxLength="200" required value={description} onChange={handleChange} />
           <span className={`popup__input-error ${inputValidity.description ? '' : 'popup__input-error_active'}`}>{inputErrorText.description}</span>
         </label>
-        <button className={`popup__submit-btn ${formValid ? '' : 'popup__submit-btn_inactive'}`} type="submit" disabled={formValid ? false : true}>{submitButtonStatus}</button>
       </>
     </PopupWithForm>
   );

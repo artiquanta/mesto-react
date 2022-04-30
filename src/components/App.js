@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -13,10 +13,10 @@ import PopupError from './PopupError';
 import Loader from './Loader';
 
 function App() {
-  const [isEditProfilePopupOpen, openPopupProfile] = useState(false);
-  const [isAddPlacePopupOpen, openPopupAddCards] = useState(false);
-  const [isEditAvatarPopupOpen, openPopupAvatar] = useState(false);
-  const [isPopupWithConfirmationOpen, openPopupConfirmation] = useState(false);
+  const [isEditProfilePopupOpen, setPopupProfileOpen] = useState(false);
+  const [isAddPlacePopupOpen, setPopupAddCardsOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setPopupAvatarOpen] = useState(false);
+  const [isPopupWithConfirmationOpen, setPopupConfirmationOpen] = useState(false);
   const [selectedCard, selectCard] = useState({});
   const [cardDeleteId, setCardDeleteId] = useState('');
   const [currentUser, setCurrentUser] = useState({});
@@ -56,11 +56,12 @@ function App() {
   // Обработчик нажатия кнопки удаления карточки
   function handleCardDeleteClick(cardId) {
     setCardDeleteId(cardId);
-    openPopupConfirmation(true);
+    setPopupConfirmationOpen(true);
   }
 
   // Обработчик удаления карточки из модального окна
   function handleCardDelete() {
+    setProcessStatus(true);
     api.removeCard(cardDeleteId)
       .then(() => {
         addCard((state) => state.filter(currentCard => currentCard._id !== cardDeleteId));
@@ -71,26 +72,26 @@ function App() {
 
   // Открытие модального окна изменения аватара
   function handleEditAvatarClick() {
-    openPopupAvatar(true);
+    setPopupAvatarOpen(true);
   }
 
   // Открытие модального окна редактирования профиля
   function handleEditProfileClick() {
-    openPopupProfile(true);
+    setPopupProfileOpen(true);
   }
 
   // Открытие модального окна добавления карточки
   function handleAddPlaceClick() {
-    openPopupAddCards(true);
+    setPopupAddCardsOpen(true);
   }
 
   // Закрытие модального окна
   function closeAllPopups() {
     setProcessStatus(false);
-    openPopupAddCards(false);
-    openPopupAvatar(false);
-    openPopupProfile(false);
-    openPopupConfirmation(false);
+    setPopupAddCardsOpen(false);
+    setPopupAvatarOpen(false);
+    setPopupProfileOpen(false);
+    setPopupConfirmationOpen(false);
     selectCard({});
     setCardDeleteId('');
   }
@@ -118,7 +119,8 @@ function App() {
       .then(newData => {
         setCurrentUser(newData);
         closeAllPopups();
-      });
+      })
+      .catch(err => showError(err));
   }
 
   // Добавление карточки места
@@ -178,6 +180,7 @@ function App() {
           isOpen={isPopupWithConfirmationOpen}
           onClose={closeAllPopups}
           onCardDelete={handleCardDelete}
+          isProcessing={isProcessing}
         />
         <PopupError
           errorData={errorData} />
@@ -188,4 +191,4 @@ function App() {
   );
 }
 
-export default App;
+export default memo(App);
