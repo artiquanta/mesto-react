@@ -19,6 +19,9 @@ function AddPlacePopup(props) {
     setPrimaryValidation(state => {
       return { ...state, title: true, link: true }
     });
+    setInputValidity(state => {
+      return { ...state, title: false, link: false }
+    });
     setFormValidity(false);
     setTitle('');
     setLink('');
