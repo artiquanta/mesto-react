@@ -17,10 +17,10 @@ function App() {
   const [isAddPlacePopupOpen, setPopupAddCardsOpen] = useState(false);
   const [isEditAvatarPopupOpen, setPopupAvatarOpen] = useState(false);
   const [isPopupWithConfirmationOpen, setPopupConfirmationOpen] = useState(false);
-  const [selectedCard, selectCard] = useState({});
+  const [selectedCard, setSelectedCard] = useState({});
   const [cardDeleteId, setCardDeleteId] = useState('');
   const [currentUser, setCurrentUser] = useState({});
-  const [cards, addCard] = useState([]);
+  const [cards, setCards] = useState([]);
   const [isProcessing, setProcessStatus] = useState(false);
   const [isLoading, setLoadingStatus] = useState(true);
   const [errorData, setErrorData] = useState({});
@@ -33,7 +33,7 @@ function App() {
     ])
       .then(([userData, cardsData]) => {
         setCurrentUser(userData);
-        addCard(existingCards => [...existingCards, ...cardsData]);
+        setCards(existingCards => [...existingCards, ...cardsData]);
         setLoadingStatus(false);
       })
       .catch(err => {
@@ -48,7 +48,7 @@ function App() {
 
     (isLiked ? api.removeLike(card._id) : api.addLike(card._id))
       .then(newCard => {
-        addCard((state) => state.map(currentCard => currentCard._id === card._id ? newCard : currentCard));
+        setCards((state) => state.map(currentCard => currentCard._id === card._id ? newCard : currentCard));
       })
       .catch(err => showError(err));
   }
@@ -64,7 +64,7 @@ function App() {
     setProcessStatus(true);
     api.removeCard(cardDeleteId)
       .then(() => {
-        addCard((state) => state.filter(currentCard => currentCard._id !== cardDeleteId));
+        setCards((state) => state.filter(currentCard => currentCard._id !== cardDeleteId));
         closeAllPopups();
       })
       .catch(err => showError(err));
@@ -92,13 +92,13 @@ function App() {
     setPopupAvatarOpen(false);
     setPopupProfileOpen(false);
     setPopupConfirmationOpen(false);
-    selectCard({});
+    setSelectedCard({});
     setCardDeleteId('');
   }
 
   // Открытие модального окна с просмотром изображения карточки
   function handleCardClick(card) {
-    selectCard(card);
+    setSelectedCard(card);
   }
 
   // Обновление профиля пользователя
@@ -128,7 +128,7 @@ function App() {
     setProcessStatus(true);
     api.addNewCard(name, link)
       .then(newCard => {
-        addCard([newCard, ...cards]);
+        setCards([newCard, ...cards]);
         closeAllPopups();
       })
       .catch(err => showError(err));
